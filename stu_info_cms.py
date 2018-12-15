@@ -21,6 +21,7 @@
 
 """
 
+
 def menu():
     menu_info = """
                 #  ＋－－－－－学生信息管理信息系统－－－－－－－－＋
@@ -40,8 +41,47 @@ def menu():
     """
     print(menu_info)
 
+
+def add_student_info():
+    """
+        1)添加学生信息
+    :return: L
+    """
+    L = []
+    while True:
+        stu_info_name = input('请输入学生姓名信息：')
+        if not stu_info_name:
+            break
+        try:
+            stu_info_age = input('请输入学生年龄信息：')
+            stu_info_score = input('请输入学生成绩：')
+        except:
+            print('输入无效，请重新输入')
+            continue
+
+        stu_info = {"name": stu_info_name, "age": stu_info_age, "score": stu_info_score}
+        L.append(stu_info)
+    print("学生信息输入完毕！")
+    print(L)
+    return L
+
+
+def show_student_info(student_info):
+    if not student_info:
+        print('无效的学生信息。。。')
+        return
+    print("名字".center(8), "年龄".center(4), "成绩".center(4))
+
+    for info in student_info:
+        print(info.get("name").center(10), info.get("age").center(4), info.get("score").center(4))
+
+
 def main():
     menu()
+
+    l1 = add_student_info()
+    show_student_info(l1)
+
 
 
 if __name__ == '__main__':
