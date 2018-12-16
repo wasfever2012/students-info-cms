@@ -33,8 +33,8 @@ def menu():
                 # ｜　６）按学生成绩低－高显示学生信息　　　　 　｜
                 # ｜　７）按学生年龄高－低显示学生信息　　 　　　｜
                 # ｜　８）按学生年龄低－高显示学生信息　　 　　　｜
-                # ｜  ９）保存学生信息到文件（students.txt)      ｜
-                # ｜  １０）从文件中读取数据（students.txt)      ｜
+                # ｜  ９）保存学生信息到文件（studentsinfo.txt)      ｜
+                # ｜  １０）从文件中读取数据（studentsinfo.txt)      ｜
                 # ｜  退出：其他任意按键＜回车＞                 ｜
                 # ＋－－－－－－－－－－－－－－－－－－－－－－＋ 
     
@@ -77,7 +77,7 @@ def del_student_info(student_info, del_name=""):
     for info in student_info:
         if del_name == info.get('name'):
             return info
-    raise IndexError('学生信息不匹配，没有找到%s' % del_name)
+    raise IndexError("学生信息不匹配，没有找到%s" % del_name)
 
 
 def mod_student_info(student_info):
@@ -98,6 +98,11 @@ def mod_student_info(student_info):
 
 
 def show_student_info(student_info):
+    """
+        显示所有学生信息
+    :param student_info: 学生信息列表
+    :return:
+    """
     if not student_info:
         print('无效的学生信息。。。')
         return
@@ -107,12 +112,109 @@ def show_student_info(student_info):
         print(info.get("name").center(10), info.get("age").center(4), info.get("score").center(4))
 
 
-def main():
-    menu()
+def get_score(*l):
+    """
+        用于sorted按照分数score排序的key表达式
+    :param l:
+    :return:
+    """
+    for x in l:
+        return x.get('score')
 
-    l1 = add_student_info()
-    show_student_info(l1)
-    del_student_info(l1)
+
+def get_age(*l):
+    """
+        用于sorted按照年龄age排序的key表达式
+    :param l:
+    :return:
+    """
+    for x in l:
+        return x.get('age')
+
+
+def score_reduce(stu_info):
+    """
+        学生信息按照成绩排序：从高到低
+    :param stu_info: 学生信息
+    :return:
+    """
+    print('按学生成绩高-低排列\n')
+    mit = sorted(stu_info, key=lambda x: x.get('score'), reverse=True)
+    show_student_info(mit)
+
+
+def score_rise(stu_info):
+    """
+        按照学生成绩从低到高排列
+    :param stu_info:
+    :return:
+    """
+    print('按照学生成绩从低到高排列\n')
+    mit = sorted(stu_info, key=lambda x: x.get('score'))
+    show_student_info(mit)
+
+
+def age_reduce(stu_info):
+    """
+        学生信息按照年龄排序：高-低
+    :param stu_info: 学生信息
+    :return:
+    """
+    print('按照年龄高-低排列\n')
+    mit = sorted(stu_info, key=lambda x: x.get('age'), reverse=True)
+    show_student_info(mit)
+
+
+def age_rise(stu_info):
+    """
+        按照年龄从低到高排列
+    :param stu_info:
+    :return:
+    """
+    print('按照年龄从低到高排列\n')
+    mit = sorted(stu_info, key=lambda x:x.get('age'))
+    show_student_info(mit)
+
+
+def save_info(stu_info):
+    with open("studentsinfo.txt", "w", encoding='utf-8') as f:
+        for info in stu_info:
+            f.write(str(info) + '\n')
+
+
+def main():
+    stu_info = []
+    while True:
+        menu()
+        num = input('请输入你的选项：')
+        if num == '1':
+            stu_info = add_student_info()
+        elif num == '2':
+            show_student_info(stu_info)
+        elif num == '3':
+            try:
+                stu_info.remove(del_student_info(stu_info))
+            except Exception as e:
+                print(e)
+        elif num == '4':
+            try:
+                student = mod_student_info(stu_info)
+            except Exception as e:
+                print(e)
+        elif num == '5':
+            score_reduce(stu_info)
+        elif num == '6':
+            score_rise(stu_info)
+        elif num == '7':
+            age_reduce(stu_info)
+        elif num == '8':
+            age_rise(stu_info)
+        elif num == '9':
+            save_info(stu_info)
+
+        else:
+            break
+        input('回车显示菜单信息')
 
 
 if __name__ == '__main__':
