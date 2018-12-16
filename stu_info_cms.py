@@ -81,13 +81,20 @@ def del_student_info(student_info, del_name=""):
 
 
 def mod_student_info(student_info):
+    """
+        修改学生信息
+    :param student_info: 学生信息
+    :return: 修改后学生信息
+    """
     if not student_info:
         mod_name = input('请输入需要修改学生的姓名：')
     for info in student_info:
         if mod_name == info.get('name'):
-            mode_age = input('请输入需要修改的学生年龄：')
-            mode_score = input('请输入需要修改的学生的成绩：')
-            info = {'name': mod_name, 'age': mode_age, 'score': mode_score}
+            mod_age = input('请输入需要修改的学生年龄：')
+            mod_score = input('请输入需要修改的学生的成绩：')
+            info = {'name': mod_name, 'age': mod_age, 'score': mod_score}
+            return info
+    raise IndexError('学生信息不匹配，没有找到%s' % mod_name)
 
 
 def show_student_info(student_info):
