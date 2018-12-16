@@ -83,6 +83,5 @@ def main():
     show_student_info(l1)
 
 
-
 if __name__ == '__main__':
     main()
