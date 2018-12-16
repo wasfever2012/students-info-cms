@@ -62,8 +62,32 @@ def add_student_info():
         stu_info = {"name": stu_info_name, "age": stu_info_age, "score": stu_info_score}
         L.append(stu_info)
     print("学生信息输入完毕！")
-    print(L)
     return L
+
+
+def del_student_info(student_info, del_name=""):
+    """
+        删除学生信息
+    :param student_info: 学生信息
+    :param del_name: 删除学生姓名
+    :return: 被学生的信息
+    """
+    if not del_name:
+        del_name = input('请输入删除学生的姓名：')
+    for info in student_info:
+        if del_name == info.get('name'):
+            return info
+    raise IndexError('学生信息不匹配，没有找到%s' % del_name)
+
+
+def mod_student_info(student_info):
+    if not student_info:
+        mod_name = input('请输入需要修改学生的姓名：')
+    for info in student_info:
+        if mod_name == info.get('name'):
+            mode_age = input('请输入需要修改的学生年龄：')
+            mode_score = input('请输入需要修改的学生的成绩：')
+            info = {'name': mod_name, 'age': mode_age, 'score': mode_score}
 
 
 def show_student_info(student_info):
@@ -81,6 +105,7 @@ def main():
 
     l1 = add_student_info()
     show_student_info(l1)
+    del_student_info(l1)
 
 
 if __name__ == '__main__':
